@@ -1,4 +1,5 @@
 from flask import Flask, render_template, flash, request
+from caesar import rotate_string_13, alphabet_position
 
 
 app = Flask(__name__)
@@ -11,33 +12,46 @@ form = """
 <html>
     <head>
         <style>
-            form {
+            form {{
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }
-            textarea {
+            }}
+            textarea {{
                 margin: 10px 0;
                 width: 540px;
                 height: 120px;
-            }
+            }}
         </style>
     </head>
     <body>
-      <form action="/encrypt" methon="post">
-        <label>
-            I want to encrypt 
-            <input type="text" name="rot"/>
-            .
-        </label>
-        <input type="submit" value="0"
+        <form method="post">
+        
+            <label for="usertext">I want to encrypt:</label>
+            <textarea name="usertext" type="text"></textarea>
+            by
+            <textarea name="rot_val" type="text" value="0"></textarea>
+            positions.
+        
+            <input type="submit">
+            
+        </form>
     </body>
 </html>
 """
 
 @app.route("/")
 def index():
-    return form
+    return form.format("","")
+
+@app.route("/", methods=['POST'])
+def encrypt():
+    text = request.form["usertext"]
+    rotval = request.form["rot_val"]
+    encrypted = rotate_string_13(text, rotval)
+    return form + encrypted
+
+app.run()
