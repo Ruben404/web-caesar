@@ -6,7 +6,6 @@ def alphabet_position(character):
     lower = character.lower()
     return alphabet.index(lower)
 
-
 def rotate_string_13(text, num):
 
     rotated = ''
@@ -14,11 +13,17 @@ def rotate_string_13(text, num):
 
     for char in text:
         
-        rotated_idx = (alphabet_position(char) + int(num) % 26)
-        if char.isupper():
-            rotated += alphabet[rotated_idx].upper()
+        if char.isalpha():
+
+            rotated_idx = ((alphabet_position(char) + int(num)) % 26)
+
+            if char.isupper():
+                rotated += alphabet[rotated_idx].upper()
+            else:
+                rotated += alphabet[rotated_idx]
+        
         else:
-            rotated += alphabet[rotated_idx]
+            rotated += char
 
     # print(rotated)
     return rotated

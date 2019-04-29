@@ -31,12 +31,12 @@ form = """
         <form method="post">
         
             <label for="usertext">I want to encrypt:</label>
-            <textarea name="usertext" type="text"></textarea>
+            <textarea name="usertext" type="text">{0}</textarea>
             by
             <textarea name="rot_val" type="text" value="0"></textarea>
             positions.
         
-            <input type="submit">
+            <input type="submit" value="Submit">
             
         </form>
     </body>
@@ -52,6 +52,6 @@ def encrypt():
     text = request.form["usertext"]
     rotval = request.form["rot_val"]
     encrypted = rotate_string_13(text, rotval)
-    return form + encrypted
-
+    print(encrypted)
+    return form.format(encrypted)
 app.run()
